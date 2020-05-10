@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "GreatCurrencyConverter",
+    "name": "Great Currency Converter",
     "slug": "GreatCurrencyConverter",
     "platforms": [
       "ios",
@@ -9,11 +9,11 @@
     ],
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/money.png",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/money.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#2b2b2b"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
