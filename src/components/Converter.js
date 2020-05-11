@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, TextInput, Image } from 'react-native';
+import { StyleSheet, View } from 'react-native';
+import Valute from './Valute';
+
+const splitBits = (number) => {
+    return number.replace(/(\d)(?=(\d{3})+([^\d]|$))/g, '$1 ')
+}
 
 export default function Converter({ currency }) {
     const [rubles, setRubles] = useState("");
@@ -7,9 +12,11 @@ export default function Converter({ currency }) {
     let rubInput = React.createRef();
     useEffect(() => {
         rubInput.current.focus();
-      }, []);
+    }, []);
 
     const vallidateText = (text) => {
+        text = text.replace(/ /g, "");
+
         if (!text.match(/^([0-9]+)([.,]?)([0-9]*)$/) && text != "") return undefined;
         text = text.replace(/\,/g, ".");
 
@@ -26,8 +33,8 @@ export default function Converter({ currency }) {
         if (vallidated === undefined) return;
         rubles = vallidated;
 
-        setRubles(rubles);
-        setDollars(`${(rubles / currency).toFixed(2)}`)
+        setDollars(`${splitBits((rubles / currency).toFixed(2))}`)
+        setRubles(splitBits(rubles));
     }
 
     const onEditUsd = (dollars) => {
@@ -35,39 +42,27 @@ export default function Converter({ currency }) {
         if (vallidated === undefined) return;
         dollars = vallidated;
 
-        setDollars(dollars);
-        setRubles(`${(dollars * currency).toFixed(2)}`);
+        setRubles(`${splitBits((dollars * currency).toFixed(2))}`);
+        setDollars(splitBits(dollars));
     }
 
     return (
         <View style={styles.converter}>
-            <View style={styles.container}>
-                <View style={styles.countryContainer}>
-                    <Image style={styles.image} source={require('../../assets/r.png')} />
-                    <Text style={styles.text}>RUB</Text>
-                </View>
-                <TextInput
-                    ref={rubInput}
-                    style={styles.input}
-                    onChangeText={onEditRub}
-                    placeholder="Ваши рубли"
-                    value={dollars == "" ? "" : rubles}
-                    keyboardType="numeric"
-                />
-            </View>
-            <View style={styles.container}>
-                <View style={styles.countryContainer}>
-                    <Image style={styles.image} source={require('../../assets/u.png')} />
-                    <Text style={styles.text}>USD</Text>
-                </View>
-                <TextInput
-                    style={styles.input}
-                    onChangeText={onEditUsd}
-                    placeholder="Ваши доллары"
-                    value={rubles == "" ? "" : dollars}
-                    keyboardType="numeric"
-                />
-            </View>
+            <Valute
+                imageSource={require("../../assets/r.png")}
+                onEdit={onEditRub}
+                value={dollars == "" ? "" : rubles}
+                placeholder="Ваши рубли"
+                valute="RUB"
+                ref={rubInput}
+            />
+            <Valute
+                imageSource={require("../../assets/u.png")}
+                onEdit={onEditUsd}
+                value={rubles == "" ? "" : dollars}
+                placeholder="Ваши доллары"
+                valute="USD"
+            />
         </View>
     );
 }
@@ -77,29 +72,5 @@ const styles = StyleSheet.create({
         flex: 3,
         backgroundColor: '#2b2b2b',
         alignItems: 'center',
-    },
-    container: {
-        flexDirection: 'row'
-    },
-    text: {
-        textAlign: 'center',
-        color: '#eee',
-        fontSize: 20,
-    },
-    input: {
-        textAlign: 'center',
-        color: '#eee',
-        fontSize: 20,
-        flex: 5,
-        margin: 4,
-    },
-    image: {
-        width: 25,
-        height: 25,
-        margin: 2
-    },
-    countryContainer: {
-        flexDirection: 'row',
-        flex: 3
     }
 });

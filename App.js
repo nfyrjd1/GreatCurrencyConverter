@@ -53,7 +53,7 @@ export default function App() {
       <View style={styles.contentContainer}>
         {content}
       </View>
-      <Button style={styles.button} title="Обновить" onPress={getCurrency} />
+      <Button disabled={isLoading} style={styles.button} title="Обновить" onPress={getCurrency} />
     </>
   );
 }
@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
   error: {
     fontSize: 24,
     color: '#eee',
-    textAlign: "center"
+    textAlign: 'center'
   },
   button: {
     flex: 1,

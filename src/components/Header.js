@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
-export default function Header ({currency, date}) {
+export default function Header({ currency, date }) {
     return (
         <View style={styles.header}>
             <Text style={styles.text}>{`Курс доллара: ${currency} руб`}</Text>
@@ -12,14 +12,14 @@ export default function Header ({currency, date}) {
 
 const styles = StyleSheet.create({
     header: {
-      flex: 2,
-      backgroundColor: '#2b2b2b',
-      alignItems: 'center',
-      justifyContent: 'flex-start'
+        flex: 2,
+        backgroundColor: '#2b2b2b',
+        alignItems: 'center',
+        justifyContent: 'flex-start'
     },
     text: {
         textAlign: 'center',
         color: '#eee',
         fontSize: 20
     }
-  });
+});
